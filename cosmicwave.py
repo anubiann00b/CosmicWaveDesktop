@@ -1,10 +1,8 @@
 import CosmicWaveModem.cosmicmodem as cosmicmodem
-import alsaaudio, time, audioop
+import alsaaudio
 
 from scipy.signal import fftconvolve
-from scipy import fftpack
-from pprint import pprint
-from numpy import argmax, sqrt, mean, diff, log
+from numpy import argmax, diff
 from matplotlib.mlab import find
 
 def parabolic(f, x):
@@ -35,11 +33,12 @@ inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NORMAL)
 inp.setchannels(1)
 inp.setrate(4000)
 inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-
 inp.setperiodsize(160)
+
+dataStream = []
 
 while True:
     # Read data from device
     l, data = inp.read() # length is 160 bytes
-    dataArr = bytearray(data)
-    print freq_from_autocorr(dataArr, 4000)*2
+    freq = freq_from_autocorr(bytearray(data), 4000)*2
+    dataStream.append(freq)
