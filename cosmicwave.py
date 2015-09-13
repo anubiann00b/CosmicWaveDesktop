@@ -16,5 +16,5 @@ while True:
     l, data = inp.read() # length is 160 bytes
     # print 'time: ' + str(time() - startTime)
     decoded = modem.decode(bytearray(data))
-    print decoded
+    # print decoded
     # dataStream.append(decoded)
