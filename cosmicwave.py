@@ -11,10 +11,20 @@ inp.setperiodsize(modem.FRAMES) # 4000
 
 dataStream = []
 
+charList = []
+
+def onData(val):
+    print "YO THIS SHIT IS GETTING CALLED: ", val
+    global charList
+    charList.append(chr(val))
+
+modem.registerOnDecodedDataListener(onData)
+
 while True:
-    # startTime = time()
-    l, data = inp.read() # length is 160 bytes
-    # print 'time: ' + str(time() - startTime)
+    startTime = time()
+    l, data = inp.read()
     decoded = modem.decode(bytearray(data))
+    # print 'time: ' + str(time() - startTime)
+    print charList
     # print decoded
     # dataStream.append(decoded)
